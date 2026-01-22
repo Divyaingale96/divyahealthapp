@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Sanjeevani</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="spotlight"></div>
+    
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 z-[200] hidden flex items-center justify-center px-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleAuth()"></div>
+        <div class="glass w-full max-w-md p-10 rounded-[40px] border border-white/10 relative z-10 animate-in fade-in zoom-in duration-300">
+            <button onclick="toggleAuth()" class="absolute top-6 right-6 text-gray-500 hover:text-white"><i data-lucide="x"></i></button>
+            
+            <div id="login-form" class="space-y-6">
+                <h2 class="text-3xl font-bold">Welcome <span class="text-teal-400">Back</span></h2>
+                <p class="text-gray-400 text-sm">Access your clinical dashboard.</p>
+                <div class="space-y-4">
+                    <input type="email" placeholder="Hospital Email" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-teal-400 text-sm">
+                    <input type="password" placeholder="Password" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-teal-400 text-sm">
+                </div>
+                <button onclick="handleAuth('login')" class="w-full bg-teal-400 text-black py-4 rounded-xl font-bold hover:shadow-[0_0_20px_rgba(45,212,191,0.4)] transition-all">Sign In</button>
+                <p class="text-center text-xs text-gray-500">Don't have an account? <button onclick="switchAuth()" class="text-teal-400 font-bold">Register Hospital</button></p>
+            </div>
+
+            <div id="signup-form" class="space-y-6 hidden">
+                <h2 class="text-3xl font-bold text-gradient">Register Team</h2>
+                <p class="text-gray-400 text-sm">Join the 2026 Health Analytics Network.</p>
+                <div class="space-y-4">
+                    <input type="text" id="reg-name" placeholder="Full Name" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-teal-400 text-sm">
+                    <input type="email" id="reg-email" placeholder="Work Email" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-teal-400 text-sm">
+                    <input type="password" id="reg-pass" placeholder="Create Password" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-teal-400 text-sm">
+                </div>
+                <button onclick="handleAuth('register')" class="w-full bg-teal-400 text-black py-4 rounded-xl font-bold hover:shadow-[0_0_20px_rgba(45,212,191,0.4)] transition-all">Create Account</button>
+                <p class="text-center text-xs text-gray-500">Already registered? <button onclick="switchAuth()" class="text-teal-400 font-bold">Sign In</button></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-[100] glass py-4 px-8 md:px-16 flex justify-between items-center">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('index.html')">
+            <div class="bg-teal-400 p-1.5 rounded-lg text-black"><i data-lucide="activity" class="w-5 h-5"></i></div>
+            <span class="text-xl font-bold tracking-tight">Sanjeevani</span>
+        </div>
+        <div class="hidden md:flex gap-8 text-sm font-medium">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="features.html" class="nav-link">Features</a>
+            <a href="predict.html" class="nav-link">Predict</a>
+            <a href="dashboard.html" class="nav-link active">Dashboard</a>
+            <a href="about.html" class="nav-link">About Us</a>
+        </div>
+        <div class="flex gap-4">
+            <button onclick="toggleAuth()" class="bg-teal-400 text-black px-5 py-2 rounded-lg font-bold text-sm hover:scale-105 transition-transform">Get Started</button>
+        </div>
+    </nav>
+
+    <!-- Dashboard Section -->
+    <main class="pt-24">
+        <section class="min-h-screen px-8 md:px-16 py-10 max-w-[1400px] mx-auto">
+            <div class="text-center mb-10">
+                <div class="inline-block bg-teal-500/10 text-teal-400 text-[10px] px-3 py-1 rounded-full uppercase font-bold tracking-widest mb-4">Interactive Dashboard</div>
+                <h2 class="text-5xl font-bold">Real-time <span class="text-teal-400">Health Analytics</span></h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-3 glass rounded-[32px] p-6 border border-white/5 flex flex-col">
+                    <div class="flex items-center gap-2 mb-6">
+                        <i data-lucide="users" class="w-5 h-5 text-teal-400"></i>
+                        <h3 class="font-bold text-lg">Patients</h3>
+                    </div>
+                    <div class="space-y-2 overflow-y-auto custom-scroll max-h-[500px] pr-2">
+                        <div class="patient-item p-4 rounded-2xl border border-white/5 cursor-pointer transition-all bg-white/5" onclick="selectPatient('Sarah', this)">
+                            <div class="flex justify-between items-start">
+                                <div><p class="font-bold text-sm">Sarah Johnson</p><p class="text-[10px] text-gray-500">Age 45 • Diabetes</p></div>
+                                <span class="bg-teal-500/20 text-teal-400 text-[10px] px-2 py-0.5 rounded-full font-bold border border-teal-500/30">12%</span>
+                            </div>
+                        </div>
+                        <div class="patient-item p-4 rounded-2xl border border-white/5 cursor-pointer transition-all" onclick="selectPatient('Michael', this)">
+                            <div class="flex justify-between items-start">
+                                <div><p class="font-bold text-sm">Michael Chen</p><p class="text-[10px] text-gray-500">Age 62 • Hypertension</p></div>
+                                <span class="bg-yellow-500/20 text-yellow-400 text-[10px] px-2 py-0.5 rounded-full font-bold border border-yellow-500/30">45%</span>
+                            </div>
+                        </div>
+                        <div class="patient-item p-4 rounded-2xl border border-white/5 cursor-pointer transition-all" onclick="selectPatient('Robert', this)">
+                            <div class="flex justify-between items-start">
+                                <div><p class="font-bold text-sm">Robert Davis</p><p class="text-[10px] text-gray-500">Age 55 • Stroke</p></div>
+                                <span class="bg-red-500/20 text-red-400 text-[10px] px-2 py-0.5 rounded-full font-bold border border-red-500/30">72%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-9 space-y-6">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="glass p-5 rounded-3xl border border-white/5">
+                            <div class="flex justify-between mb-3 text-teal-400"><i data-lucide="activity"></i> <span class="text-[10px] font-bold text-red-400">-8%</span></div>
+                            <p class="text-2xl font-black" id="dash-risk">12%</p>
+                            <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Risk Score</p>
+                        </div>
+                        <div class="glass p-5 rounded-3xl border border-white/5">
+                            <div class="flex justify-between mb-3 text-green-400"><i data-lucide="heart"></i> <span class="text-[10px] font-bold text-teal-400">+2</span></div>
+                            <p class="text-2xl font-black">72 bpm</p>
+                            <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Heart Rate</p>
+                        </div>
+                        <div class="glass p-5 rounded-3xl border border-white/5">
+                            <div class="flex justify-between mb-3 text-orange-400"><i data-lucide="droplet"></i> <span class="text-[10px] font-bold text-red-400">+5</span></div>
+                            <p class="text-2xl font-black">128/82</p>
+                            <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Blood Pressure</p>
+                        </div>
+                        <div class="glass p-5 rounded-3xl border border-white/5">
+                            <div class="flex justify-between mb-3 text-blue-400"><i data-lucide="scale"></i> <span class="text-[10px] font-bold text-teal-400">-0.5</span></div>
+                            <p class="text-2xl font-black">24.5</p>
+                            <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest">BMI Index</p>
+                        </div>
+                    </div>
+
+                    <div class="glass p-8 rounded-[40px] border border-white/5 relative">
+                        <div class="flex justify-between items-center mb-6">
+                            <h4 class="font-bold">Risk Score Trend</h4>
+                            <div class="bg-green-500/10 text-green-400 text-[12px] px-3 py-1 rounded-full font-bold border border-green-500/20">Improving</div>
+                        </div>
+                        <canvas id="dashboardChart" height="120"></canvas>
+                    </div>
+
+                    <div class="glass p-6 rounded-[32px] border border-white/10 grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+                            <i data-lucide="check-circle" class="text-green-400 w-5 h-5 mb-3"></i>
+                            <p class="text-[15px] font-bold text-gray-200">Lifestyle Changes</p>
+                            <p class="text-[12px] text-gray-500 mt-1">Increase daily activity by 30 minutes.</p>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+                            <i data-lucide="alert-circle" class="text-orange-400 w-5 h-5 mb-3"></i>
+                            <p class="text-[15px] font-bold text-gray-200">Medication Review</p>
+                            <p class="text-[12px] text-gray-500 mt-1">Schedule follow-up for BP dose.</p>
+                        </div>
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+                            <i data-lucide="calendar" class="text-blue-400 w-5 h-5 mb-3"></i>
+                            <p class="text-[15px] font-bold text-gray-200">Next Checkup</p>
+                            <p class="text-[12px] text-gray-500 mt-1">Recommended in 14 days.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

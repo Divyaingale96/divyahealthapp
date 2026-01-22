@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features | Sanjeevani</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="spotlight"></div>
+    
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 z-[200] hidden flex items-center justify-center px-4">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleAuth()"></div>
+        <div class="glass w-full max-w-md p-10 rounded-[40px] border border-white/10 relative z-10 animate-in fade-in zoom-in duration-300">
+            <button onclick="toggleAuth()" class="absolute top-6 right-6 text-gray-500 hover:text-white"><i data-lucide="x"></i></button>
+            
+            <div id="login-form" class="space-y-6">
+                <h2 class="text-3xl font-bold">Welcome <span class="text-teal-400">Back</span></h2>
+                <p class="text-gray-400 text-sm">Access your clinical dashboard.</p>
+                <div class="space-y-4">
+                    <input type="email" placeholder="Hospital Email" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-teal-400 text-sm">
+                    <input type="password" placeholder="Password" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-teal-400 text-sm">
+                </div>
+                <button onclick="handleAuth('login')" class="w-full bg-teal-400 text-black py-4 rounded-xl font-bold hover:shadow-[0_0_20px_rgba(45,212,191,0.4)] transition-all">Sign In</button>
+                <p class="text-center text-xs text-gray-500">Don't have an account? <button onclick="switchAuth()" class="text-teal-400 font-bold">Register Hospital</button></p>
+            </div>
+
+            <div id="signup-form" class="space-y-6 hidden">
+                <h2 class="text-3xl font-bold text-gradient">Register Team</h2>
+                <p class="text-gray-400 text-sm">Join the 2026 Health Analytics Network.</p>
+                <div class="space-y-4">
+                    <input type="text" id="reg-name" placeholder="Full Name" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-teal-400 text-sm">
+                    <input type="email" id="reg-email" placeholder="Work Email" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-teal-400 text-sm">
+                    <input type="password" id="reg-pass" placeholder="Create Password" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 outline-none focus:border-teal-400 text-sm">
+                </div>
+                <button onclick="handleAuth('register')" class="w-full bg-teal-400 text-black py-4 rounded-xl font-bold hover:shadow-[0_0_20px_rgba(45,212,191,0.4)] transition-all">Create Account</button>
+                <p class="text-center text-xs text-gray-500">Already registered? <button onclick="switchAuth()" class="text-teal-400 font-bold">Sign In</button></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-[100] glass py-4 px-8 md:px-16 flex justify-between items-center">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('index.html')">
+            <div class="bg-teal-400 p-1.5 rounded-lg text-black"><i data-lucide="activity" class="w-5 h-5"></i></div>
+            <span class="text-xl font-bold tracking-tight">Sanjeevani</span>
+        </div>
+        <div class="hidden md:flex gap-8 text-sm font-medium">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="features.html" class="nav-link active">Features</a>
+            <a href="predict.html" class="nav-link">Predict</a>
+            <a href="dashboard.html" class="nav-link">Dashboard</a>
+            <a href="about.html" class="nav-link">About Us</a>
+        </div>
+        <div class="flex gap-4">
+            <button onclick="toggleAuth()" class="bg-teal-400 text-black px-5 py-2 rounded-lg font-bold text-sm hover:scale-105 transition-transform">Get Started</button>
+        </div>
+    </nav>
+
+    <!-- Features Section -->
+    <main class="pt-24">
+        <section class="min-h-screen px-8 md:px-16 py-20 max-w-7xl mx-auto">
+            <h2 class="text-5xl font-bold text-center mb-16">Powerful <span class="text-teal-400">Features</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="feature-card glass p-8 rounded-[32px] border border-white/5">
+                    <div class="w-12 h-12 bg-teal-400/10 text-teal-400 rounded-xl flex items-center justify-center mb-6"><i data-lucide="brain"></i></div>
+                    <h3 class="font-bold text-xl mb-3">AI Predictions</h3>
+                    <p class="text-gray-500 text-sm">Advanced ML algorithms predict risks with 94.5% accuracy.</p>
+                </div>
+                <div class="feature-card glass p-8 rounded-[32px] border border-white/5">
+                    <div class="w-12 h-12 bg-red-400/10 text-red-400 rounded-xl flex items-center justify-center mb-6"><i data-lucide="activity"></i></div>
+                    <h3 class="font-bold text-xl mb-3">Real-time Monitoring</h3>
+                    <p class="text-gray-500 text-sm">Continuous tracking with instant alerts for abnormalities.</p>
+                </div>
+                <div class="feature-card glass p-8 rounded-[32px] border border-white/5">
+                    <div class="w-12 h-12 bg-green-400/10 text-green-400 rounded-xl flex items-center justify-center mb-6"><i data-lucide="line-chart"></i></div>
+                    <h3 class="font-bold text-xl mb-3">Interactive Analytics</h3>
+                    <p class="text-gray-500 text-sm">Beautiful dashboards transforming complex data into insights.</p>
+                </div>
+                <div class="feature-card glass p-8 rounded-[32px] border border-white/5">
+                    <div class="w-12 h-12 bg-yellow-400/10 text-yellow-400 rounded-xl flex items-center justify-center mb-6"><i data-lucide="shield-check"></i></div>
+                    <h3 class="font-bold text-xl mb-3">HIPAA Compliant</h3>
+                    <p class="text-gray-500 text-sm">Enterprise-grade security ensuring data privacy.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
